@@ -1,8 +1,5 @@
 package org.example.entities;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 public class Set extends _BaseEntity{
     private String name;
     private int quantity;

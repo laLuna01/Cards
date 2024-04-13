@@ -12,11 +12,9 @@ public class DatabaseConfig {
     public Connection getConnection() {
         try {
             return DriverManager.getConnection(URL, USER, PASSWORD);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        catch (SQLException e){
-            e.printStackTrace();
-        }
-        return null;
     }
 
     public void closeConnection(Connection connection) throws SQLException{
