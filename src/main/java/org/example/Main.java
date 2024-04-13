@@ -1,11 +1,22 @@
 package org.example;
 
+import org.example.entities.Card;
+import org.example.entities.Set;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 
+import javax.swing.text.DateFormatter;
 import java.io.IOException;
 import java.net.URI;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.util.Date;
+import java.util.Scanner;
+import java.util.function.Supplier;
 
 /**
  * Main class.
@@ -35,11 +46,15 @@ public class Main {
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
-        final HttpServer server = startServer();
-        System.out.println(String.format("Jersey app started with endpoints available at "
-                + "%s%nHit Ctrl-C to stop it...", BASE_URI));
-        System.in.read();
-        server.stop();
+//        final HttpServer server = startServer();
+//        System.out.println(String.format("Jersey app started with endpoints available at "
+//                + "%s%nHit Ctrl-C to stop it...", BASE_URI));
+//        System.in.read();
+//        server.stop();
+        Set meuSet = new Set(5, "Além de Bandlewood ", 126, "v2.14", "25/08/21");
+        Card minhaCard = new Card(1, "Caitlyn", "Piltover e Zaun", "Campeão", "Campeão", 3, 3, 3, "Ataque rápido", "Golpear: Plante 2 Bombas de Clarão entre as 8 cartas no topo do deck inimigo.", "5+ das suas armadilhas foram ativadas.", "Caitlyn sempre foi uma investigadora obstinada e meticulosa, qualidades que a ajudaram a subir rapidamente nos ranques da polícia de Piltover. Mas, quando o caso de um certo 'C' caiu em suas mãos, depois de ter sido abandonado por vários outros oficiais, parecia que Caitlyn finalmente havia encontrado alguém à sua altura. Quase.", meuSet, "https://cdn.cardsrealm.com/images/cartas/beyond-the-bandlewood/PT/med/caitlyn-05pz006.png?2654?&width=250");
+        System.out.println(meuSet);
+        System.out.println(minhaCard);
     }
 }
 
