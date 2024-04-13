@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.entities.Card;
 import org.example.entities.Set;
+import org.example.repositories.CardRepository;
 import org.example.repositories.SetRepository;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
@@ -58,6 +59,7 @@ public class Main {
         System.out.println(minhaCard);
 
         SetRepository setRepository = new SetRepository();
+        CardRepository cardRepository = new CardRepository();
     }
 }
 

@@ -27,7 +27,7 @@ public class SetRepository {
             System.out.println("Tabela 'CP_SET' criada com sucesso!");
 
         } catch (Exception e) {
-            System.out.println("Erro ao criar a tabela: " + e.getMessage());
+            System.out.println("Erro ao criar a tabela 'CP_SET': " + e.getMessage());
         }
     }
 }
