@@ -2,6 +2,7 @@ package org.example.resources;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.example.entities.Set;
 import org.example.repositories.SetRepository;
 
@@ -13,8 +14,9 @@ public class SetResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void create(Set set) {
+    public Response create(Set set) {
         setRepository.Create(set);
+        return Response.status(Response.Status.CREATED).entity(set).build();
     }
 
     @GET
@@ -32,13 +34,15 @@ public class SetResource {
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public void update(Set set) {
+    public Response update(Set set) {
         setRepository.Update(set);
+        return Response.status(Response.Status.OK).entity(set).build();
     }
 
     @DELETE
     @Path("{id}")
-    public void delete(@PathParam("id") int id) {
+    public Response delete(@PathParam("id") int id) {
         setRepository.Delete(id);
+        return Response.status(Response.Status.OK).build();
     }
 }

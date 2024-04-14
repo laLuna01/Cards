@@ -2,6 +2,7 @@ package org.example.resources;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.example.entities.Card;
 import org.example.repositories.CardRepository;
 
@@ -13,8 +14,9 @@ public class CardResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void create(Card card) {
+    public Response create(Card card) {
         cardRepository.Create(card);
+        return Response.status(Response.Status.CREATED).entity(card).build();
     }
 
     @GET
@@ -32,13 +34,15 @@ public class CardResource {
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public void update(Card card) {
+    public Response update(Card card) {
         cardRepository.Update(card);
+        return Response.status(Response.Status.OK).entity(card).build();
     }
 
     @DELETE
     @Path("{id}")
-    public void delete(@PathParam("id") int id) {
+    public Response delete(@PathParam("id") int id) {
         cardRepository.Delete(id);
+        return Response.status(Response.Status.OK).build();
     }
 }

@@ -16,7 +16,7 @@ public class SetRepository implements _Loggable {
     private final DatabaseConfig databaseConfig = new DatabaseConfig();
 
     public SetRepository() {
-
+        Initialize();
     }
 
     public void Initialize() {
@@ -89,7 +89,7 @@ public class SetRepository implements _Loggable {
 
             ResultSet rs = pstmt.executeQuery();
 
-            if (rs.next()) {
+            while (rs.next()) {
                 Date date = rs.getDate("RELEASE_DATE");
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy");
                 String formattedDate = simpleDateFormat.format(date);

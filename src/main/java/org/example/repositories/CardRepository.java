@@ -15,7 +15,7 @@ public class CardRepository implements _Loggable {
     private final DatabaseConfig databaseConfig = new DatabaseConfig();
 
     public CardRepository() {
-
+        Initialize();
     }
 
     public void Initialize() {
@@ -105,7 +105,7 @@ public class CardRepository implements _Loggable {
 
             ResultSet rs = preparedStatement.executeQuery();
 
-            if (rs.next()) {
+            while (rs.next()) {
                 SetRepository setRepository = new SetRepository();
                 Set set = setRepository.Read(rs.getInt("SET_ID"));
 
