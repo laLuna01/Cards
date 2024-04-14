@@ -36,7 +36,7 @@ public class Main {
     public static HttpServer startServer() {
         // create a resource config that scans for JAX-RS resources and providers
         // in org.example package
-        final ResourceConfig rc = new ResourceConfig().packages("org.example");
+        final ResourceConfig rc = new ResourceConfig().packages("org.example.resources");
 
         // create and start a new instance of grizzly http server
         // exposing the Jersey application at BASE_URI
@@ -49,10 +49,10 @@ public class Main {
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
-//        final HttpServer server = startServer();
-//        System.out.println(String.format("Jersey app started with endpoints available at "
-//                + "%s%nHit Ctrl-C to stop it...", BASE_URI));
-//        System.in.read();
+        final HttpServer server = startServer();
+        System.out.println(String.format("Jersey app started with endpoints available at "
+                + "%s%nHit Ctrl-C to stop it...", BASE_URI));
+        System.in.read();
 //        server.stop();
 
         Set meuSet = new Set(5, "Além de Bandlewood ", 126, "v2.14", "25/08/21");
