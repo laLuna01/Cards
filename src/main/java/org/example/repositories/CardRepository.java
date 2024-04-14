@@ -77,4 +77,21 @@ public class CardRepository {
         }
     }
 
+    public void Delete(int delId) {
+        String deleteSQL = "DELETE FROM CP_CARD WHERE CARD_ID = " + delId;
+        try(Statement stmt = databaseConfig.getConnection().createStatement()){
+            stmt.execute(deleteSQL);
+            System.out.println("Card deletada com sucesso");
+            databaseConfig.closeConnection();
+        }
+        catch (SQLException e) {
+            System.out.println("Erro ao deletar Card: " + e.getMessage());
+            try {
+                databaseConfig.closeConnection();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+    }
+
 }

@@ -63,11 +63,14 @@ public class Main {
         SetRepository setRepository = new SetRepository();
         CardRepository cardRepository = new CardRepository();
 
-        setRepository.Initialize();
-        cardRepository.Initialize();
+//        setRepository.Initialize();
+//        cardRepository.Initialize();
+//
+//        setRepository.Create(meuSet);
+//        cardRepository.Create(minhaCard);
 
-        setRepository.Create(meuSet);
-        cardRepository.Create(minhaCard);
+        cardRepository.Delete(1);
+        setRepository.Delete(5);
 
     }
 }

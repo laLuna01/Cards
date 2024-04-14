@@ -59,4 +59,21 @@ public class SetRepository {
         }
     }
 
+    public void Delete(int delId) {
+        String deleteSQL = "DELETE FROM CP_SET WHERE SET_ID = " + delId;
+        try(Statement stmt = databaseConfig.getConnection().createStatement()){
+            stmt.execute(deleteSQL);
+            System.out.println("Set deletado com sucesso");
+            databaseConfig.closeConnection();
+        }
+        catch (SQLException e) {
+            System.out.println("Erro ao deletar Set: " + e.getMessage());
+            try {
+                databaseConfig.closeConnection();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+    }
+
 }
