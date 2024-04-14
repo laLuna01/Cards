@@ -35,11 +35,7 @@ public class SetRepository implements _Loggable {
             databaseConfig.closeConnection();
         } catch (Exception e) {
             logError("Erro ao criar a tabela CP_SET: " + e.getMessage());
-            try {
-                databaseConfig.closeConnection();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
+            databaseConfig.closeConnection();
         }
     }
 
@@ -58,11 +54,7 @@ public class SetRepository implements _Loggable {
         }
         catch (SQLException e) {
             logError("Erro ao criar Set " + set + ": " + e.getMessage());
-            try {
-                databaseConfig.closeConnection();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
+            databaseConfig.closeConnection();
         }
     }
 
@@ -85,11 +77,7 @@ public class SetRepository implements _Loggable {
         }
         catch (SQLException e) {
             logError("Erro ao ler Set com id " + readId + ": " + e.getMessage());
-            try {
-                databaseConfig.closeConnection();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
+            databaseConfig.closeConnection();
         }
         return set;
     }
@@ -114,11 +102,7 @@ public class SetRepository implements _Loggable {
         }
         catch (SQLException e) {
             logError("Erro ao ler Sets: " + e.getMessage());
-            try {
-                databaseConfig.closeConnection();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
+            databaseConfig.closeConnection();
         }
         return setList;
     }
@@ -138,11 +122,7 @@ public class SetRepository implements _Loggable {
         }
         catch (SQLException e) {
             logError("Erro ao atualizar Set com id " + set.getId() + ": " + e.getMessage());
-            try {
-                databaseConfig.closeConnection();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
+            databaseConfig.closeConnection();
         }
     }
 
@@ -155,11 +135,7 @@ public class SetRepository implements _Loggable {
         }
         catch (SQLException e) {
             logError("Erro ao deletar Set com id " + delId + ": " + e.getMessage());
-            try {
-                databaseConfig.closeConnection();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
+            databaseConfig.closeConnection();
         }
     }
 

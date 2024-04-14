@@ -43,11 +43,7 @@ public class CardRepository implements _Loggable {
             databaseConfig.closeConnection();
         } catch (Exception e) {
             logError("Erro ao criar a tabela CP_CARD: " + e.getMessage());
-            try {
-                databaseConfig.closeConnection();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
+            databaseConfig.closeConnection();
         }
     }
 
@@ -75,11 +71,7 @@ public class CardRepository implements _Loggable {
         }
         catch (SQLException e) {
             logError("Erro ao criar Card " + card + ": " + e.getMessage());
-            try {
-                databaseConfig.closeConnection();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
+            databaseConfig.closeConnection();
         }
     }
 
@@ -101,11 +93,7 @@ public class CardRepository implements _Loggable {
         }
         catch (SQLException e) {
             logError("Erro ao ler Card com id " + readId + ": " + e.getMessage());
-            try {
-                databaseConfig.closeConnection();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
+            databaseConfig.closeConnection();
         }
         return card;
     }
@@ -129,11 +117,7 @@ public class CardRepository implements _Loggable {
         }
         catch (SQLException e) {
             logError("Erro ao ler Cards: " + e.getMessage());
-            try {
-                databaseConfig.closeConnection();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
+            databaseConfig.closeConnection();
         }
         return cardList;
     }
@@ -162,11 +146,7 @@ public class CardRepository implements _Loggable {
         }
         catch (SQLException e) {
             logError("Erro ao atualizar Card com id " + card.getId() + ": " + e.getMessage());
-            try {
-                databaseConfig.closeConnection();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
+            databaseConfig.closeConnection();
         }
     }
 
@@ -179,11 +159,7 @@ public class CardRepository implements _Loggable {
         }
         catch (SQLException e) {
             logError("Erro ao deletar Card com id " + delId + ": " + e.getMessage());
-            try {
-                databaseConfig.closeConnection();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
+            databaseConfig.closeConnection();
         }
     }
 
