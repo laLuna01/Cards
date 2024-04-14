@@ -122,6 +122,29 @@ public class SetRepository {
         return setList;
     }
 
+    public void Update(Set set) {
+        String updateSQL = "UPDATE CP_SET SET " +
+                "SET_ID = " + set.getId() +
+                ", SET_NAME = '" + set.getName() +
+                "', QUANTITY = " + set.getQuantity() +
+                ", RELEASE_PATCH = '" + set.getPatch() +
+                "', RELEASE_DATE = '" + set.getReleaseDate() +
+                "' WHERE SET_ID = " + set.getId();
+        try(Statement stmt = databaseConfig.getConnection().createStatement()){
+            stmt.execute(updateSQL);
+            System.out.println("Set atualizado com sucesso");
+            databaseConfig.closeConnection();
+        }
+        catch (SQLException e) {
+            System.out.println("Erro ao atualizar Set: " + e.getMessage());
+            try {
+                databaseConfig.closeConnection();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+    }
+
     public void Delete(int delId) {
         String deleteSQL = "DELETE FROM CP_SET WHERE SET_ID = " + delId;
         try(Statement stmt = databaseConfig.getConnection().createStatement()){

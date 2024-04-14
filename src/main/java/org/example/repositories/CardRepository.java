@@ -139,6 +139,38 @@ public class CardRepository {
         return cardList;
     }
 
+    public void Update(Card card) {
+        String updateSQL = "UPDATE CP_CARD SET " +
+                "CARD_ID = " + card.getId() +
+                ", CARD_NAME = '" + card.getName() +
+                "', REGION = '" + card.getRegion() +
+                "', TYPE = '" + card.getType() +
+                "', RARITY = '" + card.getRarity() +
+                "', MANA_COST = " + card.getManaCost() +
+                ", POWER = " + card.getPower() +
+                ", HEALTH = " + card.getHealth() +
+                ", EFFECT = '" + card.getEffect() +
+                "', DESCRIPTION = '" + card.getDescription() +
+                "', LEVEL_UP = '" + card.getLevelUp() +
+                "', FLAVOR = '" + card.getFlavorText() +
+                "', SET_ID = " + card.getSet().getId() +
+                ", LINK_IMAGE = '" + card.getLinkImage() +
+                "' WHERE CARD_ID = " + card.getId();
+        try(Statement stmt = databaseConfig.getConnection().createStatement()){
+            stmt.execute(updateSQL);
+            System.out.println("Card atualizada com sucesso");
+            databaseConfig.closeConnection();
+        }
+        catch (SQLException e) {
+            System.out.println("Erro ao atualizar Card: " + e.getMessage());
+            try {
+                databaseConfig.closeConnection();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+    }
+
     public void Delete(int delId) {
         String deleteSQL = "DELETE FROM CP_CARD WHERE CARD_ID = " + delId;
         try(Statement stmt = databaseConfig.getConnection().createStatement()){
