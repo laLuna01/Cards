@@ -12,7 +12,7 @@ import java.util.List;
 import org.example.entities.Set;
 import org.example.infrastructure.DatabaseConfig;
 
-public class SetRepository {
+public class SetRepository implements _Loggable {
     private final DatabaseConfig databaseConfig = new DatabaseConfig();
 
     public SetRepository() {
@@ -31,10 +31,10 @@ public class SetRepository {
 
         try (Statement stmt = databaseConfig.getConnection().createStatement()) {
             stmt.execute(createTableSQL);
-            System.out.println("Tabela 'CP_SET' criada com sucesso!");
+            logInfo("Tabela CP_SET criada com sucesso");
             databaseConfig.closeConnection();
         } catch (Exception e) {
-            System.out.println("Erro ao criar a tabela 'CP_SET': " + e.getMessage());
+            logError("Erro ao criar a tabela CP_SET: " + e.getMessage());
             try {
                 databaseConfig.closeConnection();
             } catch (SQLException ex) {
@@ -53,11 +53,11 @@ public class SetRepository {
                 "')";
         try(Statement stmt = databaseConfig.getConnection().createStatement()){
             stmt.execute(insertSetSQL);
-            System.out.println("Set criado com sucesso");
+            logInfo("Set " + set + " criado com sucesso");
             databaseConfig.closeConnection();
         }
         catch (SQLException e) {
-            System.out.println("Erro ao criar Set: " + e.getMessage());
+            logError("Erro ao criar Set " + set + ": " + e.getMessage());
             try {
                 databaseConfig.closeConnection();
             } catch (SQLException ex) {
@@ -80,10 +80,11 @@ public class SetRepository {
 
             set = new Set(rs.getInt("SET_ID"), rs.getString("SET_NAME"), rs.getInt("QUANTITY"), rs.getString("RELEASE_PATCH"), formattedDate);
 
+            logInfo("Leitura de Set realizada com sucesso: " + set);
             databaseConfig.closeConnection();
         }
         catch (SQLException e) {
-            System.out.println("Erro ao ler Set: " + e.getMessage());
+            logError("Erro ao ler Set com id " + readId + ": " + e.getMessage());
             try {
                 databaseConfig.closeConnection();
             } catch (SQLException ex) {
@@ -108,11 +109,11 @@ public class SetRepository {
                 Set set = new Set(rs.getInt("SET_ID"), rs.getString("SET_NAME"), rs.getInt("QUANTITY"), rs.getString("RELEASE_PATCH"), formattedDate);
                 setList.add(set);
             }
-
+            logInfo("Leitura de Sets realizada com sucesso");
             databaseConfig.closeConnection();
         }
         catch (SQLException e) {
-            System.out.println("Erro ao ler Sets: " + e.getMessage());
+            logError("Erro ao ler Sets: " + e.getMessage());
             try {
                 databaseConfig.closeConnection();
             } catch (SQLException ex) {
@@ -132,11 +133,11 @@ public class SetRepository {
                 "' WHERE SET_ID = " + set.getId();
         try(Statement stmt = databaseConfig.getConnection().createStatement()){
             stmt.execute(updateSQL);
-            System.out.println("Set atualizado com sucesso");
+            logInfo("Set com id " + set.getId() + " atualizado com sucesso");
             databaseConfig.closeConnection();
         }
         catch (SQLException e) {
-            System.out.println("Erro ao atualizar Set: " + e.getMessage());
+            logError("Erro ao atualizar Set com id " + set.getId() + ": " + e.getMessage());
             try {
                 databaseConfig.closeConnection();
             } catch (SQLException ex) {
@@ -149,11 +150,11 @@ public class SetRepository {
         String deleteSQL = "DELETE FROM CP_SET WHERE SET_ID = " + delId;
         try(Statement stmt = databaseConfig.getConnection().createStatement()){
             stmt.execute(deleteSQL);
-            System.out.println("Set deletado com sucesso");
+            logInfo("Set com id " + delId + " deletado com sucesso");
             databaseConfig.closeConnection();
         }
         catch (SQLException e) {
-            System.out.println("Erro ao deletar Set: " + e.getMessage());
+            logError("Erro ao deletar Set com id " + delId + ": " + e.getMessage());
             try {
                 databaseConfig.closeConnection();
             } catch (SQLException ex) {

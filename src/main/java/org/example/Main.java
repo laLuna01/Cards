@@ -73,10 +73,15 @@ public class Main {
 
 //        System.out.println(cardRepository.Read(1));
 //        System.out.println(setRepository.Read(5));
+
 //        System.out.println(cardRepository.ReadAll());
 //        System.out.println(setRepository.ReadAll());
-        setRepository.Update(meuSetAtualizado);
-        cardRepository.Update(minhaCardAtualizada);
+
+//        setRepository.Update(meuSetAtualizado);
+//        cardRepository.Update(minhaCardAtualizada);
+
+//        setRepository.Delete(5);
+//        cardRepository.Delete(1);
     }
 }
 

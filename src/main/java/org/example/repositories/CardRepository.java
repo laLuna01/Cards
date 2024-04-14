@@ -8,12 +8,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-public class CardRepository {
+public class CardRepository implements _Loggable {
     private final DatabaseConfig databaseConfig = new DatabaseConfig();
 
     public CardRepository() {
@@ -41,10 +39,10 @@ public class CardRepository {
 
         try (Statement stmt = databaseConfig.getConnection().createStatement()) {
             stmt.execute(createTableSQL);
-            System.out.println("Tabela 'CP_CARD' criada com sucesso!");
+            logInfo("Tabela CP_CARD criada com sucesso");
             databaseConfig.closeConnection();
         } catch (Exception e) {
-            System.out.println("Erro ao criar a tabela 'CP_CARD': " + e.getMessage());
+            logError("Erro ao criar a tabela CP_CARD: " + e.getMessage());
             try {
                 databaseConfig.closeConnection();
             } catch (SQLException ex) {
@@ -72,11 +70,11 @@ public class CardRepository {
                 "')";
         try(Statement stmt = databaseConfig.getConnection().createStatement()){
             stmt.execute(insertCardSQL);
-            System.out.println("Card criada com sucesso");
+            logInfo("Card " + card + " criada com sucesso");
             databaseConfig.closeConnection();
         }
         catch (SQLException e) {
-            System.out.println("Erro ao criar Card: " + e.getMessage());
+            logError("Erro ao criar Card " + card + ": " + e.getMessage());
             try {
                 databaseConfig.closeConnection();
             } catch (SQLException ex) {
@@ -98,10 +96,11 @@ public class CardRepository {
 
             card = new Card(rs.getInt("CARD_ID"), rs.getString("CARD_NAME"), rs.getString("REGION"), rs.getString("TYPE"), rs.getString("RARITY"), rs.getInt("MANA_COST"), rs.getInt("POWER"), rs.getInt("HEALTH"), rs.getString("EFFECT"), rs.getString("DESCRIPTION"), rs.getString("LEVEL_UP"), rs.getString("FLAVOR"), set, rs.getString("LINK_IMAGE"));
 
+            logInfo("Leitura de Card realizada com sucesso: " + card);
             databaseConfig.closeConnection();
         }
         catch (SQLException e) {
-            System.out.println("Erro ao ler Card: " + e.getMessage());
+            logError("Erro ao ler Card com id " + readId + ": " + e.getMessage());
             try {
                 databaseConfig.closeConnection();
             } catch (SQLException ex) {
@@ -125,11 +124,11 @@ public class CardRepository {
                 Card card = new Card(rs.getInt("CARD_ID"), rs.getString("CARD_NAME"), rs.getString("REGION"), rs.getString("TYPE"), rs.getString("RARITY"), rs.getInt("MANA_COST"), rs.getInt("POWER"), rs.getInt("HEALTH"), rs.getString("EFFECT"), rs.getString("DESCRIPTION"), rs.getString("LEVEL_UP"), rs.getString("FLAVOR"), set, rs.getString("LINK_IMAGE"));
                 cardList.add(card);
             }
-
+            logInfo("Leitura de Cards realizada com sucesso");
             databaseConfig.closeConnection();
         }
         catch (SQLException e) {
-            System.out.println("Erro ao ler Cards: " + e.getMessage());
+            logError("Erro ao ler Cards: " + e.getMessage());
             try {
                 databaseConfig.closeConnection();
             } catch (SQLException ex) {
@@ -158,11 +157,11 @@ public class CardRepository {
                 "' WHERE CARD_ID = " + card.getId();
         try(Statement stmt = databaseConfig.getConnection().createStatement()){
             stmt.execute(updateSQL);
-            System.out.println("Card atualizada com sucesso");
+            logInfo("Card com id " + card.getId() + " atualizada com sucesso");
             databaseConfig.closeConnection();
         }
         catch (SQLException e) {
-            System.out.println("Erro ao atualizar Card: " + e.getMessage());
+            logError("Erro ao atualizar Card com id " + card.getId() + ": " + e.getMessage());
             try {
                 databaseConfig.closeConnection();
             } catch (SQLException ex) {
@@ -175,11 +174,11 @@ public class CardRepository {
         String deleteSQL = "DELETE FROM CP_CARD WHERE CARD_ID = " + delId;
         try(Statement stmt = databaseConfig.getConnection().createStatement()){
             stmt.execute(deleteSQL);
-            System.out.println("Card deletada com sucesso");
+            logInfo("Card com id " + delId + " deletada com sucesso");
             databaseConfig.closeConnection();
         }
         catch (SQLException e) {
-            System.out.println("Erro ao deletar Card: " + e.getMessage());
+            logError("Erro ao deletar Card com id " + delId + ": " + e.getMessage());
             try {
                 databaseConfig.closeConnection();
             } catch (SQLException ex) {
