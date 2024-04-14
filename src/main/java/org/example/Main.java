@@ -69,8 +69,10 @@ public class Main {
 //        setRepository.Create(meuSet);
 //        cardRepository.Create(minhaCard);
 
-        cardRepository.Delete(1);
-        setRepository.Delete(5);
+        System.out.println(cardRepository.Read(1));
+        System.out.println(setRepository.Read(5));
+        System.out.println(cardRepository.ReadAll());
+        System.out.println(setRepository.ReadAll());
 
     }
 }

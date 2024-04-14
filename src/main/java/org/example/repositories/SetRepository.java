@@ -1,7 +1,14 @@
 package org.example.repositories;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import org.example.entities.Set;
 import org.example.infrastructure.DatabaseConfig;
 
@@ -57,6 +64,62 @@ public class SetRepository {
                 throw new RuntimeException(ex);
             }
         }
+    }
+
+    public Set Read(int readId) {
+        Set set = new Set();
+        String selectSQL = "SELECT * FROM CP_SET WHERE SET_ID = ";
+        try(PreparedStatement pstmt = databaseConfig.getConnection().prepareStatement(selectSQL + readId)) {
+
+            ResultSet rs = pstmt.executeQuery();
+            rs.next();
+
+            Date date = rs.getDate("RELEASE_DATE");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy");
+            String formattedDate = simpleDateFormat.format(date);
+
+            set = new Set(rs.getInt("SET_ID"), rs.getString("SET_NAME"), rs.getInt("QUANTITY"), rs.getString("RELEASE_PATCH"), formattedDate);
+
+            databaseConfig.closeConnection();
+        }
+        catch (SQLException e) {
+            System.out.println("Erro ao ler Set: " + e.getMessage());
+            try {
+                databaseConfig.closeConnection();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+        return set;
+    }
+
+    public List<Set> ReadAll() {
+        List<Set> setList = new ArrayList<>();
+        String selectAllSQL = "SELECT * FROM CP_SET";
+        try(PreparedStatement pstmt = databaseConfig.getConnection().prepareStatement(selectAllSQL)) {
+
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                Date date = rs.getDate("RELEASE_DATE");
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy");
+                String formattedDate = simpleDateFormat.format(date);
+
+                Set set = new Set(rs.getInt("SET_ID"), rs.getString("SET_NAME"), rs.getInt("QUANTITY"), rs.getString("RELEASE_PATCH"), formattedDate);
+                setList.add(set);
+            }
+
+            databaseConfig.closeConnection();
+        }
+        catch (SQLException e) {
+            System.out.println("Erro ao ler Sets: " + e.getMessage());
+            try {
+                databaseConfig.closeConnection();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+        return setList;
     }
 
     public void Delete(int delId) {

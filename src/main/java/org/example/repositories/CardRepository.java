@@ -1,9 +1,17 @@
 package org.example.repositories;
 
 import org.example.entities.Card;
+import org.example.entities.Set;
 import org.example.infrastructure.DatabaseConfig;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class CardRepository {
     private final DatabaseConfig databaseConfig = new DatabaseConfig();
@@ -75,6 +83,60 @@ public class CardRepository {
                 throw new RuntimeException(ex);
             }
         }
+    }
+
+    public Card Read(int readId) {
+        Card card = new Card();
+        String selectSQL = "SELECT * FROM CP_CARD WHERE CARD_ID = ";
+        try(PreparedStatement pstmt = databaseConfig.getConnection().prepareStatement(selectSQL + readId)) {
+
+            ResultSet rs = pstmt.executeQuery();
+            rs.next();
+
+            SetRepository setRepository = new SetRepository();
+            Set set = setRepository.Read(rs.getInt("SET_ID"));
+
+            card = new Card(rs.getInt("CARD_ID"), rs.getString("CARD_NAME"), rs.getString("REGION"), rs.getString("TYPE"), rs.getString("RARITY"), rs.getInt("MANA_COST"), rs.getInt("POWER"), rs.getInt("HEALTH"), rs.getString("EFFECT"), rs.getString("DESCRIPTION"), rs.getString("LEVEL_UP"), rs.getString("FLAVOR"), set, rs.getString("LINK_IMAGE"));
+
+            databaseConfig.closeConnection();
+        }
+        catch (SQLException e) {
+            System.out.println("Erro ao ler Card: " + e.getMessage());
+            try {
+                databaseConfig.closeConnection();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+        return card;
+    }
+
+    public List<Card> ReadAll() {
+        List<Card> cardList = new ArrayList<>();
+        String selectAllSQL = "SELECT * FROM CP_CARD";
+        try(PreparedStatement preparedStatement = databaseConfig.getConnection().prepareStatement(selectAllSQL)) {
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                SetRepository setRepository = new SetRepository();
+                Set set = setRepository.Read(rs.getInt("SET_ID"));
+
+                Card card = new Card(rs.getInt("CARD_ID"), rs.getString("CARD_NAME"), rs.getString("REGION"), rs.getString("TYPE"), rs.getString("RARITY"), rs.getInt("MANA_COST"), rs.getInt("POWER"), rs.getInt("HEALTH"), rs.getString("EFFECT"), rs.getString("DESCRIPTION"), rs.getString("LEVEL_UP"), rs.getString("FLAVOR"), set, rs.getString("LINK_IMAGE"));
+                cardList.add(card);
+            }
+
+            databaseConfig.closeConnection();
+        }
+        catch (SQLException e) {
+            System.out.println("Erro ao ler Cards: " + e.getMessage());
+            try {
+                databaseConfig.closeConnection();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+        return cardList;
     }
 
     public void Delete(int delId) {
