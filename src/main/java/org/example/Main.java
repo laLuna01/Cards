@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.entities.Card;
 import org.example.entities.Set;
+import org.example.infrastructure.DatabaseConfig;
 import org.example.repositories.CardRepository;
 import org.example.repositories.SetRepository;
 import org.glassfish.grizzly.http.server.HttpServer;
@@ -53,13 +54,21 @@ public class Main {
 //                + "%s%nHit Ctrl-C to stop it...", BASE_URI));
 //        System.in.read();
 //        server.stop();
+
         Set meuSet = new Set(5, "Além de Bandlewood ", 126, "v2.14", "25/08/21");
-        Card minhaCard = new Card(1, "Caitlyn", "Piltover e Zaun", "Campeão", "Campeão", 3, 3, 3, "Ataque rápido", "Golpear: Plante 2 Bombas de Clarão entre as 8 cartas no topo do deck inimigo.", "5+ das suas armadilhas foram ativadas.", "Caitlyn sempre foi uma investigadora obstinada e meticulosa, qualidades que a ajudaram a subir rapidamente nos ranques da polícia de Piltover. Mas, quando o caso de um certo 'C' caiu em suas mãos, depois de ter sido abandonado por vários outros oficiais, parecia que Caitlyn finalmente havia encontrado alguém à sua altura. Quase.", meuSet, "https://cdn.cardsrealm.com/images/cartas/beyond-the-bandlewood/PT/med/caitlyn-05pz006.png?2654?&width=250");
+        Card minhaCard = new Card(1, "Caitlyn", "Piltover e Zaun", "Campeão", "Campeão", 3, 3, 3, "Ataque rápido", "Golpear: Plante 2 Bombas de Clarão entre as 8 cartas no topo do deck inimigo.", "5+ das suas armadilhas foram ativadas.", "Caitlyn sempre foi uma investigadora obstinada e meticulosa, qualidades que a ajudaram a subir rapidamente nos ranques da polícia de Piltover. Mas, quando o caso de um certo C caiu em suas mãos, depois de ter sido abandonado por vários outros oficiais, parecia que Caitlyn finalmente havia encontrado alguém à sua altura. Quase.", meuSet, "https://cdn.cardsrealm.com/images/cartas/beyond-the-bandlewood/PT/med/caitlyn-05pz006.png?2654?&width=250");
         System.out.println(meuSet);
         System.out.println(minhaCard);
 
         SetRepository setRepository = new SetRepository();
         CardRepository cardRepository = new CardRepository();
+
+        setRepository.Initialize();
+        cardRepository.Initialize();
+
+        setRepository.Create(meuSet);
+        cardRepository.Create(minhaCard);
+
     }
 }
 

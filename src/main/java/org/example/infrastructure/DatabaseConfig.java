@@ -17,7 +17,7 @@ public class DatabaseConfig {
         }
     }
 
-    public void closeConnection(Connection connection) throws SQLException{
-        connection.close();
+    public void closeConnection() throws SQLException{
+        this.getConnection().close();
     }
 }
